@@ -19,12 +19,13 @@ class IHangmanImplementation implements IHangman {
     public String[] words = new String[854];
     public String hiddenWord;
     public String Expected;
-    public boolean lost = false;
     public boolean won = false;
+    public boolean lost = false;
+    private char[] wordCharacters = new char[300];
+    private int j = 0;
     private int trials = 1;
-    private char[] choices = new char[854];
-    private int choice = 0;
-
+    
+    
     public void setDictionary(String [] words) {
         try{
             Scanner read1 = new Scanner(new FileReader("hangman.txt"));
@@ -33,7 +34,7 @@ class IHangmanImplementation implements IHangman {
             }
         }
         catch (Exception e){
-            System.out.println("Unable to access");
+            System.out.println("Unable to access The File");
         }
     }
 
@@ -45,7 +46,7 @@ class IHangmanImplementation implements IHangman {
         return hiddenWord;
     }
 
-    public void intialize(){
+    public void Set(){
         hiddenWord = hiddenWord.toLowerCase();
         Expected = hiddenWord.replaceAll("\\S","-");
     }
@@ -55,55 +56,47 @@ class IHangmanImplementation implements IHangman {
     }
     public String guess(Character c) {
         if(!lost) {
-            boolean x = false;
-            if (hiddenWord.equals(Expected)) {
-                System.out.println("'you win");
-            }
+            boolean a = false;
+            if (hiddenWord.equals(Expected))    System.out.println("you have won");          
             else {
                 if (trials > 0) {
-                    for (int i = 0; i < choices.length; i++) {
-                        if (choices[i] == c) {
-                            x = true;
-                        }
+                    for (int i = 0; i < wordCharacters.length; i++) {
+                        if (wordCharacters[i] == c)    x = true;                        
                     }
-                    if (!x) {
-                        choices[choice] = c;
-                        choice++;
-                        boolean y = false;
+                    if (!a) {
+                        wordCharacters[j] = c;
+                        j++;
+                        boolean b = false;
                         for (int i = 0; i < hiddenWord.length(); i++) {
                             if (hiddenWord.charAt(i) == c) {
                                 Expected = Expected.substring(0, i) + c + Expected.substring(i + 1);
-                                y = true;
+                                b = true;
                             }
                         }
-                        if (hiddenWord.equals(Expected)) {
-                            won =true;
-                        }
-                        if (!y) {
-                            trials--;
-                        }
+                        if (hiddenWord.equals(Expected))    won = true;                       
+                        if (!b)   trials--;                      
                         System.out.println(Expected);
                         }
-                        else {
-                        System.out.println("you already choose this character");
+                     else {
+                        System.out.println("This character have been chosen before");
                         System.out.println(Expected);
-                    }
-                    }
+                         }
+                      }
                 else {
-                    System.out.println("you lose that game");
-                    System.out.println("the secret word is " + hiddenWord);
+                    System.out.println("Game Over You have lost");
+                    System.out.println("The secret word is " + hiddenWord);
                 }
             }
-            System.out.println("the available chances :" + trials);
-            if (trials == 0) {
-                lost = true;
-            }
+            System.out.println("Remaining Trials " + trials);
+            if (trials == 0)     lost = true;
         }
-        else{throw new RuntimeException("maximum number of chances");}
+        else{
+        throw new RuntimeException("maximum number of chances");
+        }
         return Expected;
     }
     public void setMaxWrongGuesses(Integer max) {
-        trials =max;
-        choices=new char[max+ hiddenWord.length()];
+        trials = max;
+        wordCharacters = new char[max+ hiddenWord.length()];
     }
 }
