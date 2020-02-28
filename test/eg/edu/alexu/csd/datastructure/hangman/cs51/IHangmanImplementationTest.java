@@ -6,10 +6,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class IHangmanImplementationTest {
     @Test
-    public void test1(){
+    public void testcase1(){
         IHangmanImplementation x=new IHangmanImplementation();
-        x.hiddenWord="computer";
-        x.intialize();
+        x.hiddenWord = "computer";
+        x.Set();
         x.guess('c');
         x.guess('o');
         x.guess('m');
@@ -21,11 +21,11 @@ class IHangmanImplementationTest {
         assertEquals(true,x.won);
     }
     @Test
-    public void test2(){
+    public void testcase2(){
         IHangmanImplementation x = new IHangmanImplementation();
         String result;
         x.hiddenWord = "book";
-        x.intialize();
+        x.Set();
         result= x.guess('b');
         assertEquals("b---",result);
         result=x.guess('o');
@@ -36,30 +36,30 @@ class IHangmanImplementationTest {
     }
 
     @Test
-    public void test3(){
+    public void testcase3(){
         IHangmanImplementation x = new IHangmanImplementation();
         x.hiddenWord = "Pound";
-        x.intialize();
+        x.Set();
         x.guess('f');
         assertEquals(true,x.lost);
         assertThrows(RuntimeException.class,()->{x.guess('d');});
     }
 
     @Test
-    public void test4(){
+    public void testcase4(){
         IHangmanImplementation x = new IHangmanImplementation();
         x.hiddenWord = "world";
-        x.intialize();
+        x.Set();
         x.guess('f');
         assertEquals(true,x.lost);
         assertThrows(RuntimeException.class,()->{x.guess('d');});
     }
 
     @Test
-    public void test5(){
+    public void testcase5(){
         IHangmanImplementation x = new IHangmanImplementation();
         x.hiddenWord = "ruler";
-        x.intialize();
+        x.Set();
         x.setMaxWrongGuesses(3);
         x.guess('f');
         x.guess('b');
@@ -69,11 +69,11 @@ class IHangmanImplementationTest {
     }
 
     @Test
-    public void test6(){
-        String word=null;
+    public void testcase6(){
+        String word = null;
         IHangmanImplementation x = new IHangmanImplementation();
         x.setDictionary(x.words);
-        word= x.selectRandomSecretWord();
+        word = x.selectRandomSecretWord();
         assertTrue(!word.isEmpty());
     }
 }
